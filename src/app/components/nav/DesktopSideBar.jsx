@@ -3,7 +3,7 @@ import { navigation } from "../../../contexts/store";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const DesktopSideBar = () => {
-  const { SideBar, setSideBar } = navigation();
+  const { setSideBar, SideBar, currPage, setPage, Tabs } = navigation();
 
   return (
     <div className="DesktopSideBar">
@@ -21,7 +21,23 @@ const DesktopSideBar = () => {
           onClick={() => setSideBar(!SideBar)}
         />
       </div>
-      <div className="flex-grow">Home</div>
+      <div className="flex-grow w-full">
+        {Tabs.map((tab) => (
+          <div
+            key={tab.key}
+            className="PageTab"
+            style={{
+              ...(currPage === tab.key && {
+                backgroundColor: "AppWorkspace",
+                color: "InfoText",
+              }),
+            }}
+            onClick={() => setPage(tab.key)}
+          >
+            {tab.title}
+          </div>
+        ))}
+      </div>
       <div>CopyRight</div>
     </div>
   );

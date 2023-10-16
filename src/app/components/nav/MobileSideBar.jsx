@@ -3,8 +3,13 @@ import { navigation } from "../../../contexts/store";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const MobileSideBar = () => {
-  const { setSideBar, SideBar } = navigation();
-
+  const { setSideBar, SideBar, currPage, setPage, Tabs } = navigation();
+  const handleClick = (tab) => {
+    setPage(tab);
+    if (window.innerWidth <= 800) {
+      setSideBar(false);
+    }
+  };
   return (
     <div className="MobileSideBar">
       <div className="FlexBetween">
@@ -21,10 +26,22 @@ const MobileSideBar = () => {
           onClick={() => setSideBar(!SideBar)}
         />
       </div>
-      <div className="flex justify-start items-start flex-col flex-grow w-full">
-        <div>Home</div>
-        <div>Home</div>
-        <div>Home</div>
+      <div className="flex justify-start items-start flex-col flex-grow w-full gap-1">
+        {Tabs.map((tab) => (
+          <div
+            key={tab.key}
+            className="PageTab"
+            style={{
+              ...(currPage === tab.key && {
+                backgroundColor: "AppWorkspace",
+                color: "InfoText",
+              }),
+            }}
+            onClick={() => handleClick(tab.key)}
+          >
+            {tab.title}
+          </div>
+        ))}
       </div>
       <div>CopyRights</div>
     </div>
